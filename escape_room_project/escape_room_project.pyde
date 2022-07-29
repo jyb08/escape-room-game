@@ -32,11 +32,55 @@ def setup():
     room1 = loadImage("./room1/room1.png")
     global prologue
     prologue = loadImage("./intro/prologue.png")
-
-
-def draw():
+    
+    
+def calculateLineEquation(x1, y1, x2, y2):
+    
+    slope = (y2 - y1) / (x2 - x1)
+    intercept = y1 - (y2 - y1) / (x2 - x1) * x1
+    
+    return (slope, intercept)
     
 
+def detectAreaWithCoordinates(x1, y1, x2, y2, x3, y3, x4, y4, a, b):
+    # Upper Left x1, y1
+    # Upper Right x2, y2
+    # Lower Right x3, y3
+    # Lower left x4, y4
+    
+    line1_slope = calculateLineEquation(x1, y1, x2, y2)[0]
+    line1_intercept = calculateLineEquation(x1, y1, x2, y2)[1]
+    
+    line2_slope = calculateLineEquation(x2, y2, x3, y3)[0]
+    line2_intercept = calculateLineEquation(x2, y2, x3, y3)[1]
+    
+    line3_slope = calculateLineEquation(x3, y3, x4, y4)[0]
+    line3_intercept = calculateLineEquation(x3, y3, x4, y4)[1]
+    
+    line4_slope = calculateLineEquation(x4, y4, x1, y1)[0]
+    line4_intercept = calculateLineEquation(x4, y4, x1, y1)[1]
+    
+    condition1 = True if (b > line1_slope * a + line1_intercept) else False
+    if (line2_slope < 0):
+        condition2 = True if (b < line2_slope * a + line2_intercept) else False
+    else:
+        condition2 = True if (b > line2_slope * a + line2_intercept) else False
+    condition3 = True if (b < line3_slope * a + line3_intercept) else False
+    if (line4_slope < 0):
+        condition4 = True if (b > line4_slope * a + line4_intercept) else False
+    else:
+        condition4 = True if (b < line4_slope * a + line4_intercept) else False
+    
+    print("condition1: " + str(condition1))
+    print("condition2: " + str(condition2))
+    print("condition3: " + str(condition3))
+    print("condition4: " + str(condition4))
+    
+    return condition1 and condition2 and condition3 and condition4    
+
+def draw():
+    print("x: " + str(mouseX) + " y: " + str(mouseY))
+    print(detectAreaWithCoordinates(335, 307, 443, 374, 314, 396, 425, 462, mouseX, mouseY))
     
     if gameData.scene == "MainScene":
         drawMainScene()
