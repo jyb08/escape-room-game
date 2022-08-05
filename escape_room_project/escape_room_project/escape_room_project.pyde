@@ -1,7 +1,7 @@
 class GameData:
     
     def __init__(self):
-        self.scene = "MainScene"
+        self.scene = "Room2Scene"
         
         # EMPTY, F_STATE, I_STATE, S_STATE, FINISHED
         self.passwordSceneState = "EMPTY"
@@ -212,14 +212,14 @@ def drawRoom2Scene():
     
     image(room2, 0, 0, 1200, 800)
     
+
     print("x: " + str(mouseX) + " y: " + str(mouseY))
-    
-    # if (detectAreaWithCoordinates(106, 63, 330, 107, 298, 254, 78, 203, mouseX, mouseY)):
-    #     image(hanja, 0, 0, 1200, 800)
-    # if (detectAreaWithCoordinates(106, 63, 330, 107, 298, 254, 78, 203, mouseX, mouseY)):
-    #     image(graph, 0, 0, 1200, 800)
-    # if (detectAreaWithCoordinates(106, 63, 330, 107, 298, 254, 78, 203, mouseX, mouseY)):
-    #     image(pokemon, 0, 0, 1200, 800)
+    if (detectAreaWithCoordinates(94, 129, 294, 188, 292, 339, 99, 351, mouseX, mouseY)):
+        image(hanja, 0, 0, 1200, 800)
+    if (detectAreaWithCoordinates(375, 190, 540, 228, 536, 325, 370, 334, mouseX, mouseY)):
+        image(graph, 0, 0, 1200, 800)
+    if (detectAreaWithCoordinates(592, 243, 694, 269, 694, 328, 590, 335, mouseX, mouseY)):
+        image(pokemon, 0, 0, 1200, 800)
     
     
 
