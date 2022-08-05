@@ -3,9 +3,7 @@ class GameData:
     def __init__(self):
         self.scene = "MainScene"
     
-    
 gameData = GameData()
-
 
 def setup():
     size(1200, 800)
@@ -28,25 +26,34 @@ def setup():
     #intro
     global pasta_resto
     pasta_resto = loadImage("./intro/pasta_resto.png")
+    #room1
     global room1
     room1 = loadImage("./room1/room1.png")
     global prologue
     prologue = loadImage("./intro/prologue.png")
+    #passwordscene
+    global PasswordScene
+    PasswordScene = loadImage("./room_password/PasswordScene.png")
+   
+    global fInserted
+    fInserted = loadImage("./room_password/fInserted.png")
+    global iInserted
+    iInserted = loadImage("./room_password/iInserted.png")
+    global sInserted
+    sInserted = loadImage("./room_password/sInserted.png")
+    global hInserted
+    hInserted = loadImage("./room_password/hInserted.png")
     
+
     
 def calculateLineEquation(x1, y1, x2, y2):
     
-    slope = (y2 - y1) / (x2 - x1)
-    intercept = y1 - (y2 - y1) / (x2 - x1) * x1
+    slope = float(y2 - y1) / float(x2 - x1)
+    intercept = y1 - (float(y2 - y1) / float(x2 - x1)) * x1
     
     return (slope, intercept)
     
-
 def detectAreaWithCoordinates(x1, y1, x2, y2, x3, y3, x4, y4, a, b):
-    # Upper Left x1, y1
-    # Upper Right x2, y2
-    # Lower Right x3, y3
-    # Lower left x4, y4
     
     line1_slope = calculateLineEquation(x1, y1, x2, y2)[0]
     line1_intercept = calculateLineEquation(x1, y1, x2, y2)[1]
@@ -61,35 +68,33 @@ def detectAreaWithCoordinates(x1, y1, x2, y2, x3, y3, x4, y4, a, b):
     line4_intercept = calculateLineEquation(x4, y4, x1, y1)[1]
     
     condition1 = True if (b > line1_slope * a + line1_intercept) else False
-    if (line2_slope < 0):
-        condition2 = True if (b < line2_slope * a + line2_intercept) else False
-    else:
+    if (line2_slope > 0):
         condition2 = True if (b > line2_slope * a + line2_intercept) else False
-    condition3 = True if (b < line3_slope * a + line3_intercept) else False
-    if (line4_slope < 0):
-        condition4 = True if (b > line4_slope * a + line4_intercept) else False
     else:
+        condition2 = True if (b < line2_slope * a + line2_intercept) else False
+    condition3 = True if (b < line3_slope * a + line3_intercept) else False
+    if (line4_slope > 0):
         condition4 = True if (b < line4_slope * a + line4_intercept) else False
-    
-    print("condition1: " + str(condition1))
-    print("condition2: " + str(condition2))
-    print("condition3: " + str(condition3))
-    print("condition4: " + str(condition4))
+    else:
+        condition4 = True if (b > line4_slope * a + line4_intercept) else False
     
     return condition1 and condition2 and condition3 and condition4    
 
 def draw():
-    print("x: " + str(mouseX) + " y: " + str(mouseY))
-    print(detectAreaWithCoordinates(335, 307, 443, 374, 314, 396, 425, 462, mouseX, mouseY))
-    
+            
     if gameData.scene == "MainScene":
         drawMainScene()
     elif gameData.scene == "IntroScene":
         drawIntroScene()
     elif gameData.scene == "PrologueScene":
         drawPrologueScene()
-    elif gameData.scene == "Room1Scene":
+    elif gameData.scene == "Room1Scene" :
         drawRoom1Scene()
+    elif gameData.scene == "PasswordScene":
+        drawPasswordScene()
+    elif gameData.scene == "Room2Scene":
+        drawRoom2Scene()
+        
     
 def drawMainScene():
 
@@ -102,9 +107,6 @@ def drawMainScene():
     image(title, 250, 70, 700, 250)
     image(jessica, 1080, 150, 180, 660)
 
-
-
-    
     print(gameData.scene)
     
 def drawIntroScene():
@@ -113,13 +115,6 @@ def drawIntroScene():
 
 def drawPrologueScene():
     image(prologue, 0, 0, 1200, 800)
-    
-def drawRoom1Scene():
-    image(room1, 0, 0, 1200, 800)
-
-    
-
-    
     
 def mouseClicked():
     if gameData.scene == "MainScene":
@@ -134,9 +129,81 @@ def mouseClicked():
     elif gameData.scene == "IntroScene":
         gameData.scene = "PrologueScene"
     elif gameData.scene == "PrologueScene":
-        gameData.scene = "Room1Scene"
+         gameData.scene = "Room1Scene"
+    elif gameData.scene == "Room1Scene" and (detectAreaWithCoordinates(335, 307, 443, 374, 425, 462, 314, 396,  mouseX, mouseY)) == True:
+         gameData.scene = "PasswordScene"
+    elif gameData.scene == "PasswordScene":
+         gameData.scene = "Room2Scene"
+
+
+def drawRoom1Scene():
+    textSize(32)
+    fill(90, 80, 80)
+    
+    image(room1, 0, 0, 1200, 800)
+    
+    print("x: " + str(mouseX) + " y: " + str(mouseY))
         
-        
+    if (detectAreaWithCoordinates(335, 307, 443, 374, 425, 462, 314, 396,  mouseX, mouseY)):
+        text("go to the sea", 990, 10, 1200, 300)
+    else:
+        cursor(ARROW)
+     
+
+
+
+def drawPasswordScene():
+    image(PasswordScene, 0, 0, 1200, 800)
+    
+    textSize(64)
+    if key == 'f':
+        image(fInserted, 0, 0, 1200, 800)
+    if key == 'i':
+        image(iInserted, 0, 0, 1200, 800)
+    if key == 's':
+        image(sInserted, 0, 0, 1200, 800)
+    if key == 'h':
+        image(hInserted, 0, 0, 1200, 800)
+        #Help: when you click 'i' first, you get f and i. 
+         #     same thing for all other laters. trying to make it work respectively. :(
+                                                                                       
+def drawRoom2Scene():
+    pass                    
+
+    
+
+
+
+
+
+
+      
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+                
+
         
         
     
