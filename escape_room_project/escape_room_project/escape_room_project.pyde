@@ -2,6 +2,9 @@ class GameData:
     
     def __init__(self):
         self.scene = "MainScene"
+        
+        # EMPTY, F_STATE, I_STATE, S_STATE, FINISHED
+        self.passwordSceneState = "EMPTY"
     
 gameData = GameData()
 
@@ -29,12 +32,13 @@ def setup():
     #room1
     global room1
     room1 = loadImage("./room1/room1.png")
+    global letter
+    letter = loadImage("./room1/letter.png")
     global prologue
     prologue = loadImage("./intro/prologue.png")
     #passwordscene
     global PasswordScene
     PasswordScene = loadImage("./room_password/PasswordScene.png")
-   
     global fInserted
     fInserted = loadImage("./room_password/fInserted.png")
     global iInserted
@@ -43,6 +47,9 @@ def setup():
     sInserted = loadImage("./room_password/sInserted.png")
     global hInserted
     hInserted = loadImage("./room_password/hInserted.png")
+    #room2
+    global room2
+    room2 = loadImage("./room2/room2.png")
     
 
     
@@ -107,7 +114,7 @@ def drawMainScene():
     image(title, 250, 70, 700, 250)
     image(jessica, 1080, 150, 180, 660)
 
-    print(gameData.scene)
+    # print(gameData.scene)
     
 def drawIntroScene():
     image(pasta_resto, 0, 0, 1200, 800)
@@ -142,34 +149,58 @@ def drawRoom1Scene():
     
     image(room1, 0, 0, 1200, 800)
     
-    print("x: " + str(mouseX) + " y: " + str(mouseY))
+    # print("x: " + str(mouseX) + " y: " + str(mouseY))
         
     if (detectAreaWithCoordinates(335, 307, 443, 374, 425, 462, 314, 396,  mouseX, mouseY)):
         text("go to the sea", 990, 10, 1200, 300)
     else:
         cursor(ARROW)
+    if (detectAreaWithCoordinates(106, 63, 330, 107, 298, 254, 78, 203, mouseX, mouseY)):
+        image(letter, 0, 0, 1200, 800)
      
+
+def keyPressed():
+    
+    if gameData.scene == "MainScene":
+         pass
+    elif gameData.scene == "IntroScene":
+         pass
+    elif gameData.scene == "PrologueScene":
+         pass
+    elif gameData.scene == "Room1Scene":
+         pass
+    elif gameData.scene == "PasswordScene":
+        if gameData.passwordSceneState == 'EMPTY' and key =='f': 
+            gameData.passwordSceneState  = 'F_STATE'
+        elif gameData.passwordSceneState  == 'F_STATE' and key == 'i':
+            gameData.passwordSceneState  = 'I_STATE'
+        elif gameData.passwordSceneState  == 'I_STATE' and key == 's':
+            gameData.passwordSceneState  = 'S_STATE'
+        elif gameData.passwordSceneState  == 'S_STATE' and key == 'h':
+            gameData.passwordSceneState  = 'FINISHED'
+        
+
 
 
 
 def drawPasswordScene():
     image(PasswordScene, 0, 0, 1200, 800)
-    
     textSize(64)
-    if key == 'f':
+    if gameData.passwordSceneState == 'F_STATE':
         image(fInserted, 0, 0, 1200, 800)
-    if key == 'i':
+    if gameData.passwordSceneState == 'I_STATE':
         image(iInserted, 0, 0, 1200, 800)
-    if key == 's':
+    if gameData.passwordSceneState == 'S_STATE':
         image(sInserted, 0, 0, 1200, 800)
-    if key == 'h':
+    if gameData.passwordSceneState == 'FINISHED':
         image(hInserted, 0, 0, 1200, 800)
-        #Help: when you click 'i' first, you get f and i. 
-         #     same thing for all other laters. trying to make it work respectively. :(
+    
+
                                                                                        
 def drawRoom2Scene():
-    pass                    
-
+    
+    image(room2, 0, 0, 1200, 800)
+    
     
 
 
