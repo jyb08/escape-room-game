@@ -50,6 +50,12 @@ def setup():
     #room2
     global room2
     room2 = loadImage("./room2/room2.png")
+    global hanja
+    hanja = loadImage("./room2/hanja.png")
+    global pokemon
+    pokemon = loadImage("./room2/pokemon.png")
+    global graph
+    graph = loadImage("./room2/graph.png")
     
 
     
@@ -141,6 +147,9 @@ def mouseClicked():
          gameData.scene = "PasswordScene"
     elif gameData.scene == "PasswordScene":
          gameData.scene = "Room2Scene"
+    elif gameData.scene == "PasswordScene":
+        if gameData.passwordSceneState == 'FINISHED' and detectAreaWithCoordinates(872, 382, 1142, 375, 1142, 480, 872, 486, mouseX, mouseY):
+            gameData.scene == "Room2Scene"
 
 
 def drawRoom1Scene():
@@ -194,12 +203,23 @@ def drawPasswordScene():
         image(sInserted, 0, 0, 1200, 800)
     if gameData.passwordSceneState == 'FINISHED':
         image(hInserted, 0, 0, 1200, 800)
+
+    
     
 
                                                                                        
 def drawRoom2Scene():
     
     image(room2, 0, 0, 1200, 800)
+    
+    print("x: " + str(mouseX) + " y: " + str(mouseY))
+    
+    # if (detectAreaWithCoordinates(106, 63, 330, 107, 298, 254, 78, 203, mouseX, mouseY)):
+    #     image(hanja, 0, 0, 1200, 800)
+    # if (detectAreaWithCoordinates(106, 63, 330, 107, 298, 254, 78, 203, mouseX, mouseY)):
+    #     image(graph, 0, 0, 1200, 800)
+    # if (detectAreaWithCoordinates(106, 63, 330, 107, 298, 254, 78, 203, mouseX, mouseY)):
+    #     image(pokemon, 0, 0, 1200, 800)
     
     
 
