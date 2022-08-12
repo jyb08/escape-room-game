@@ -63,15 +63,15 @@ def setup():
     global default 
     default = loadImage("./room2/default.png")
     global one 
-    one = loadImage("./room2/one.png")
+    one = loadImage("./room2_password/one.png")
     global two 
-    two = loadImage("./room2/two.png")
+    two = loadImage("./room2_password/two.png")
     global three 
-    three = loadImage("./room2/three.png")
+    three = loadImage("./room2_password/three.png")
     global four 
-    four = loadImage("./room2/four.png")
+    four = loadImage("./room2_password/four.png")
     global room2_4_psw 
-    room2_4_psw  = loadImage("./room2/room2_4_psw .png")
+    room2_4_psw  = loadImage("./room2_password/room2_4_psw .png")
     
 
     
