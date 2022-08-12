@@ -1,11 +1,14 @@
 class GameData:
     
     def __init__(self):
-        self.scene = "Room2Scene"
+        self.scene = "MainScene"
         
         # EMPTY, F_STATE, I_STATE, S_STATE, FINISHED
         self.passwordSceneState = "EMPTY"
+        self.passwordSceneStateForGameover = 0
+        self.passwordScene2StateForGameover = 0
         self.passwordScene2State = "DEFAULT"
+        
     
 gameData = GameData()
 
@@ -27,6 +30,8 @@ def setup():
     title = loadImage("./main/title.png")
     global jessica
     jessica = loadImage("./main/jessica.png")
+    global game_over
+    game_over = loadImage("./main/game_over.png")
     #intro
     global pasta_resto
     pasta_resto = loadImage("./intro/pasta_resto.png")
@@ -129,6 +134,8 @@ def draw():
         drawPassword2Scene()
     elif gameData.scene == "Room3Scene":
         drawRoom3Scene()
+    elif gameData.scene == "GameOverScene":
+        drawGameOverScene()
 
         
 def drawMainScene():
@@ -169,7 +176,6 @@ def mouseClicked():
          gameData.scene = "PasswordScene"
     elif gameData.scene == "PasswordScene":
         if gameData.passwordSceneState == 'FINISHED' and detectAreaWithCoordinates(872, 382, 1142, 375, 1141, 480, 871, 486, mouseX, mouseY):
-            print("detected")
             gameData.scene = "Room2Scene"
     elif gameData.scene == "Room2Scene" and (detectAreaWithCoordinates(950, 372, 971, 373, 972, 409, 951, 414, mouseX, mouseY)) == True:
          gameData.scene = "Password2Scene"
@@ -178,6 +184,8 @@ def mouseClicked():
     elif gameData.scene == "Password2Scene":
         if gameData.passwordScene2State == 'FOUR':
             gameData.scene = "Room3Scene"
+    elif gameData.scene == "GameOverScene":
+         gameData.scene = "MainScene"
 
 def drawRoom1Scene():
     textSize(32)
@@ -204,6 +212,7 @@ def keyPressed():
     elif gameData.scene == "Room1Scene":
          pass
     elif gameData.scene == "PasswordScene":
+        gameData.passwordSceneStateForGameover += 1
         if gameData.passwordSceneState == 'EMPTY' and key =='f': 
             gameData.passwordSceneState  = 'F_STATE'
         elif gameData.passwordSceneState  == 'F_STATE' and key == 'i':
@@ -226,13 +235,18 @@ def keyPressed():
         
       
 
-
+def drawGameOverScene():
+    image(game_over, 0, 0, 1200, 800)
+    
 
 def drawPasswordScene():
     
 
     image(PasswordScene, 0, 0, 1200, 800)
     textSize(64)
+    if gameData.passwordSceneStateForGameover > 10:
+        gameData.passwordSceneStateForGameover = 0
+        gameData.scene = "GameOverScene"
     if gameData.passwordSceneState == 'F_STATE':
         image(fInserted, 0, 0, 1200, 800)
     if gameData.passwordSceneState == 'I_STATE':
@@ -264,6 +278,9 @@ def drawRoom2Scene():
 
 def drawPassword2Scene():
     image(default_4_pw, 100, 95, 1000, 605)
+    if gameData.passwordScene2StateForGameover > 10:
+        gameData.passwordScene2StateForGameover = 0
+        gameData.scene = "GameOverScene"
     if gameData.passwordScene2State == 'ONE':
         image(one, 100, 95, 1000, 605)
     elif gameData.passwordScene2State == 'TWO':
