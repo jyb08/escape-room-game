@@ -61,17 +61,17 @@ def setup():
     letter2 = loadImage("./room2/letter2.png")
     #room2_password
     global default 
-    default = loadImage("./room2_password/default.png")
+    default = loadImage("./room2/default.png")
     global one 
-    one = loadImage("./room2_password/one.png")
+    one = loadImage("./room2/one.png")
     global two 
-    two = loadImage("./room2_password/two.png")
+    two = loadImage("./room2/two.png")
     global three 
-    three = loadImage("./room2_password/three.png")
+    three = loadImage("./room2/three.png")
     global four 
-    four = loadImage("./room2_password/four.png")
+    four = loadImage("./room2/four.png")
     global room2_4_psw 
-    room2_4_psw  = loadImage("./room2_password/room2_4_psw .png")
+    room2_4_psw  = loadImage("./room2/room2_4_psw .png")
     
 
     
@@ -166,17 +166,16 @@ def mouseClicked():
     elif gameData.scene == "Room1Scene" and (detectAreaWithCoordinates(335, 307, 443, 374, 425, 462, 314, 396,  mouseX, mouseY)) == True:
          gameData.scene = "PasswordScene"
     elif gameData.scene == "PasswordScene":
-         gameData.scene = "Room2Scene"
-    elif gameData.scene == "PasswordScene":
-        if gameData.passwordSceneState == 'FINISHED' and detectAreaWithCoordinates(872, 382, 1142, 375, 1142, 480, 872, 486, mouseX, mouseY):
-            gameData.scene == "Room2Scene"
+        if gameData.passwordSceneState == 'FINISHED' and detectAreaWithCoordinates(872, 382, 1142, 375, 1141, 480, 871, 486, mouseX, mouseY):
+            print("detected")
+            gameData.scene = "Room2Scene"
     elif gameData.scene == "Room2Scene" and (detectAreaWithCoordinates(950, 372, 971, 373, 972, 409, 951, 414, mouseX, mouseY)) == True:
-         gameData.scene == "Password2Scene"
+         gameData.scene = "Password2Scene"
     elif gameData.scene == "Password2Scene":
          gameData.scene = "Room3Scene"
     elif gameData.scene == "Password2Scene":
         if gameData.passwordScene2State == 'FOUR':
-            gameData.scene == "Room3Scene"
+            gameData.scene = "Room3Scene"
 
 def drawRoom1Scene():
     textSize(32)
@@ -247,7 +246,7 @@ def drawRoom2Scene():
     
     image(room2, 0, 0, 1200, 800)
     
-    print("x: " + str(mouseX) + " y: " + str(mouseY))
+    # print("x: " + str(mouseX) + " y: " + str(mouseY))
     if (detectAreaWithCoordinates(94, 129, 294, 188, 292, 339, 99, 351, mouseX, mouseY)):
         image(hanja, width/2 - 200, height/2 - 200, 400, 400)
     elif (detectAreaWithCoordinates(375, 190, 540, 228, 536, 325, 370, 334, mouseX, mouseY)):
