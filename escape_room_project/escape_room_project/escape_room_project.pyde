@@ -1,7 +1,7 @@
 class GameData:
     
     def __init__(self):
-        self.scene = "Room1Scene"
+        self.scene = "Room2Scene"
         
         # EMPTY, F_STATE, I_STATE, S_STATE, FINISHED
         self.passwordSceneState = "EMPTY"
@@ -59,9 +59,10 @@ def setup():
     graph = loadImage("./room2/graph.png")
     global letter2
     letter2 = loadImage("./room2/letter2.png")
-    #room2_password
+
     global default 
     default = loadImage("./room2/default.png")
+    #room2_password
     global one 
     one = loadImage("./room2_password/one.png")
     global two 
@@ -71,8 +72,9 @@ def setup():
     global four 
     four = loadImage("./room2_password/four.png")
     global room2_4_psw 
-    room2_4_psw  = loadImage("./room2_password/room2_4_psw .png")
-    
+    room2_4_psw  = loadImage("./room2_password/room2_4_psw.png")
+    global default_4_pw
+    default_4_pw  = loadImage("./room2_password/default_4_pw.png")
 
     
 def calculateLineEquation(x1, y1, x2, y2):
@@ -183,7 +185,6 @@ def drawRoom1Scene():
     
     image(room1, 0, 0, 1200, 800)
     
-    # print("x: " + str(mouseX) + " y: " + str(mouseY))
         
     if (detectAreaWithCoordinates(335, 307, 443, 374, 425, 462, 314, 396,  mouseX, mouseY)):
         text("go to the sea", 990, 10, 1200, 300)
@@ -228,6 +229,8 @@ def keyPressed():
 
 
 def drawPasswordScene():
+    
+
     image(PasswordScene, 0, 0, 1200, 800)
     textSize(64)
     if gameData.passwordSceneState == 'F_STATE':
@@ -255,20 +258,20 @@ def drawRoom2Scene():
         image(pokemon, width/2 - 200, height/2 - 200, 400, 400)
     elif (detectAreaWithCoordinates(400, 471, 623, 605, 618, 624, 394, 591, mouseX, mouseY)):
         image(letter2, 0, 0, 1200, 800)
-    elif (detectAreaWithCoordinates(950, 372, 971, 373, 972, 409, 951, 414, mouseX, mouseY)):
-        image(default, width/2 - 400, height/2 - 300, 800, 600)    
+    # elif (detectAreaWithCoordinates(950, 372, 971, 373, 972, 409, 951, 414, mouseX, mouseY)):
+    #     image(default, width/2 - 400, height/2 - 300, 800, 600)    
     
 
 def drawPassword2Scene():
-    image(room2_4_psw, 0, 0, 2100, 800)
+    image(default_4_pw, 100, 95, 1000, 605)
     if gameData.passwordScene2State == 'ONE':
-        image(one, width/2 - 200, height/2 - 200, 400, 400)
+        image(one, 100, 95, 1000, 605)
     elif gameData.passwordScene2State == 'TWO':
-        image(two, width/2 - 200, height/2 - 200, 400, 400)
+        image(two, 100, 95, 1000, 605)
     elif gameData.passwordScene2State == 'THREE':
-        image(three, width/2 - 200, height/2 - 200, 400, 400)
+        image(three, 100, 95, 1000, 605)
     elif gameData.passwordScene2State == 'FOUR':
-        image(four, width/2 - 200, height/2 - 200, 400, 400)
+        image(four, 100, 95, 1000, 605)
 
 def drawRoom3Scene():
     pass
