@@ -1,7 +1,7 @@
 class GameData:
     
     def __init__(self):
-        self.scene = "MainScene"
+        self.scene = "Room2Scene"
         
         # EMPTY, F_STATE, I_STATE, S_STATE, FINISHED
         self.passwordSceneState = "EMPTY"
@@ -80,6 +80,8 @@ def setup():
     room2_4_psw  = loadImage("./room2_password/room2_4_psw.png")
     global default_4_pw
     default_4_pw  = loadImage("./room2_password/default_4_pw.png")
+    global room3
+    room3  = loadImage("./room3/bathroom.jpg")
 
     
 def calculateLineEquation(x1, y1, x2, y2):
@@ -179,10 +181,10 @@ def mouseClicked():
             gameData.scene = "Room2Scene"
     elif gameData.scene == "Room2Scene" and (detectAreaWithCoordinates(950, 372, 971, 373, 972, 409, 951, 414, mouseX, mouseY)) == True:
          gameData.scene = "Password2Scene"
+    # elif gameData.scene == "Password2Scene":
+    #      gameData.scene = "Room3Scene"
     elif gameData.scene == "Password2Scene":
-         gameData.scene = "Room3Scene"
-    elif gameData.scene == "Password2Scene":
-        if gameData.passwordScene2State == 'FOUR':
+        if gameData.passwordScene2State == 'FOUR' and (detectAreaWithCoordinates(750, 289, 953, 296, 949, 364, 753, 361,  mouseX, mouseY)) == True:
             gameData.scene = "Room3Scene"
     elif gameData.scene == "GameOverScene":
          gameData.scene = "MainScene"
@@ -224,6 +226,7 @@ def keyPressed():
     elif gameData.scene == "Room2Scene":
         pass
     elif gameData.scene == "Password2Scene":
+        gameData.passwordScene2StateForGameover += 1
         if gameData.passwordScene2State == 'DEFAULT' and key =='1': 
             gameData.passwordScene2State  = 'ONE'
         elif gameData.passwordScene2State == 'ONE' and key == '3':
@@ -232,7 +235,8 @@ def keyPressed():
             gameData.passwordScene2State  = 'THREE'
         elif gameData.passwordScene2State == 'THREE' and key == '2':
             gameData.passwordScene2State  = 'FOUR'
-        
+    elif gameData.scene == "Room3Scene":
+        pass
       
 
 def drawGameOverScene():
@@ -291,10 +295,9 @@ def drawPassword2Scene():
         image(four, 100, 95, 1000, 605)
 
 def drawRoom3Scene():
-    pass
+    image(room3, 0, 0, 1200, 800)
 
 
-      
 
     
     
