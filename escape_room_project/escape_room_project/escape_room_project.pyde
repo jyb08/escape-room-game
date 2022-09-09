@@ -81,7 +81,13 @@ def setup():
     global default_4_pw
     default_4_pw  = loadImage("./room2_password/default_4_pw.png")
     global room3
-    room3  = loadImage("./room3/bathroom.jpg")
+    room3  = loadImage("./room3/room3.jpg")
+    global rock
+    rock  = loadImage("./room3/rock.jpg")
+    global paper
+    paper  = loadImage("./room3/paper.jpg")
+    global scissors
+    scissors  = loadImage("./room3/scissors.jpg")
 
     
 def calculateLineEquation(x1, y1, x2, y2):
@@ -184,7 +190,7 @@ def mouseClicked():
     # elif gameData.scene == "Password2Scene":
     #      gameData.scene = "Room3Scene"
     elif gameData.scene == "Password2Scene":
-        if gameData.passwordScene2State == 'FOUR' and (detectAreaWithCoordinates(750, 289, 953, 296, 949, 364, 753, 361,  mouseX, mouseY)) == True:
+        if gameData.passwordScene2State == 'FOUR' and (detectAreaWithCoordinates(885, 367, 1085, 358, 1089, 431, 887, 425,  mouseX, mouseY)) == True:
             gameData.scene = "Room3Scene"
     elif gameData.scene == "GameOverScene":
          gameData.scene = "MainScene"
@@ -293,13 +299,29 @@ def drawPassword2Scene():
         image(three, 100, 95, 1000, 605)
     elif gameData.passwordScene2State == 'FOUR':
         image(four, 100, 95, 1000, 605)
-
+        
+    print("x:" + str(mouseX) + "y:"+ str(mouseY))
+        
+#backgroun info, cartoon version
+        
 def drawRoom3Scene():
     image(room3, 0, 0, 1200, 800)
-
-
-
     
+#explain the rules + play button
+
+def findDistance(c1, c2, a, b):
+    distance = sqrt(sq(b - c2) - sq(a - c1))
+    return (distance)
+    
+def detectCircle(c1, c2, r, a, b):
+    if r < findDistance(c1, c2, a, b):
+        return(False)
+    if r > findDistance(c1, c2, a, b):
+        return(True)
+    
+def rockPaperScissors():
+    
+
     
     
     
