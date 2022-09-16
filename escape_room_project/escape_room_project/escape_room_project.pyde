@@ -1,7 +1,7 @@
 class GameData:
     
     def __init__(self):
-        self.scene = "MainScene"
+        self.scene = "Room2Scene"
         
         # EMPTY, F_STATE, I_STATE, S_STATE, FINISHED
         self.passwordSceneState = "EMPTY"
@@ -83,6 +83,8 @@ def setup():
     room2_4_psw  = loadImage("./room2_password/room2_4_psw.png")
     global default_4_pw
     default_4_pw  = loadImage("./room2_password/default_4_pw.png")
+    global InfoB4Room3
+    InfoB4Room3 = loadImage("./InfoBeforeRoom3/InfoB4Room3.png")
     global room3
     room3  = loadImage("./room3/room3.jpg")
     global room3_password
@@ -99,6 +101,7 @@ def setup():
     paper_selected  = loadImage("./room3_password/paper_selected.png")
     global scissors_selected
     scissors_selected  = loadImage("./room3_password/scissors_selected.png")
+    
 
     
 def calculateLineEquation(x1, y1, x2, y2):
@@ -151,12 +154,12 @@ def draw():
         drawRoom2Scene()
     elif gameData.scene == "Password2Scene":
         drawPassword2Scene()
-    elif gameData.scene == "Room3Scene":
-        drawRoom3Scene()
     elif gameData.scene == "Password3Scene":
         drawPassword3Scene()
     elif gameData.scene == "GameOverScene":
         drawGameOverScene()
+    elif gameData.scene == "InfoBeforeRoom3":
+        drawInfoBeforeRoom3()
 
         
 def drawMainScene():
@@ -208,8 +211,8 @@ def mouseClicked():
     #      gameData.scene = "Room3Scene"
     elif gameData.scene == "Password2Scene":
         if gameData.passwordScene2State == 'FOUR' and (detectAreaWithCoordinates(885, 367, 1085, 358, 1089, 431, 887, 425,  mouseX, mouseY)) == True:
-            gameData.scene = "Room3Scene"
-    elif gameData.scene == "Room3Scene":
+            gameData.scene = "InfoBeforeRoom3"
+    elif gameData.scene == "InfoBeforeRoom3":
         gameData.scene = "Password3Scene"
     elif gameData.scene == "Password3Scene":
         if detectCircle(135, 690, 60, mX, mY) == True:
@@ -218,6 +221,7 @@ def mouseClicked():
             gameData.passwordScene3StateForPlayer = 'scissors' 
     elif gameData.scene == "GameOverScene":
          gameData.scene = "MainScene"
+
 
 def drawRoom1Scene():
     textSize(32)
@@ -327,13 +331,10 @@ def drawPassword2Scene():
         
     print("x:" + str(mouseX) + "y:"+ str(mouseY))
         
-#backgroun info, cartoon version
-        
-def drawRoom3Scene():
-    image(room3, 0, 0, 1200, 800)
-    print("x:" + str(mouseX) + "y:"+ str(mouseY))
+def drawInfoBeforeRoom3():
+    image(InfoB4Room3, 0, 0, 1200, 800)
     
-#explain the rules + play button
+
 
 
 
@@ -380,15 +381,17 @@ def drawPassword3Scene():
         image(rock_selected, 80, 640, 120, 120)
     
 
-    # if rockPaperScissors() == "CW":
-        
-        
+    if rockPaperScissors() == "CW":
+        gameData.scene = "GameOverScene"
+    if rockPaperScissors() == "D":
+        gameData.scene = "Password3Scene"
+    
     
         
     
     # print(gameData.passwordScene3StateForPlayer)
     
-    
+    #sdf
     
     
     
