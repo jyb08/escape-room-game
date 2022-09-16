@@ -1,7 +1,7 @@
 class GameData:
     
     def __init__(self):
-        self.scene = "Room2Scene"
+        self.scene = "Password3Scene"
         
         # EMPTY, F_STATE, I_STATE, S_STATE, FINISHED
         self.passwordSceneState = "EMPTY"
@@ -12,6 +12,7 @@ class GameData:
         
         self.passwordScene3StateForPlayer = ""
         self.passwordScene3StateForComputer = ""
+        self.passwordScene3GameResult = ""
     
 gameData = GameData()
 
@@ -101,6 +102,10 @@ def setup():
     paper_selected  = loadImage("./room3_password/paper_selected.png")
     global scissors_selected
     scissors_selected  = loadImage("./room3_password/scissors_selected.png")
+    global rules
+    rules = loadImage("./room3_password/rules.png")
+    global last_door
+    last_door = loadImage("./last_room/last_door.jpg")
     
 
     
@@ -156,10 +161,14 @@ def draw():
         drawPassword2Scene()
     elif gameData.scene == "Password3Scene":
         drawPassword3Scene()
+    elif gameData.scene == "FinalResultScene":
+        drawFinalResultScene()
     elif gameData.scene == "GameOverScene":
         drawGameOverScene()
     elif gameData.scene == "InfoBeforeRoom3":
         drawInfoBeforeRoom3()
+    elif gameData.scene == "LastRoom":
+        drawLastRoom()
 
         
 def drawMainScene():
@@ -217,11 +226,25 @@ def mouseClicked():
     elif gameData.scene == "Password3Scene":
         if detectCircle(135, 690, 60, mX, mY) == True:
             gameData.passwordScene3StateForPlayer = 'rock'
+            computerPlay()
+            rockPaperScissors()
+            gameData.scene = "FinalResultScene"
         elif detectCircle(285, 690, 60, mX, mY) == True:
             gameData.passwordScene3StateForPlayer = 'scissors' 
+            computerPlay()
+            rockPaperScissors()
+            gameData.scene = "FinalResultScene"
+    elif gameData.scene == "FinalResultScene":
+        if gameData.passwordScene3GameResult == "CW":
+            gameData.scene = "GameOverScene"
+        elif gameData.passwordScene3GameResult == "PW":
+            gameData.scene = "LastRoom"
+        elif gameData.passwordScene3GameResult == "D":
+            gameData.scene = "Password3Scene"
     elif gameData.scene == "GameOverScene":
          gameData.scene = "MainScene"
-
+    elif gameData.scene == "LastRoom":
+        exit()
 
 def drawRoom1Scene():
     textSize(32)
@@ -353,13 +376,14 @@ def detectCircle(c1, c2, r, a, b):
 
 def rockPaperScissors():
     if gameData.passwordScene3StateForPlayer == 'scissors' and gameData.passwordScene3StateForComputer == 'rock':
-        return("CW")
+        gameData.passwordScene3GameResult = "CW"
     if gameData.passwordScene3StateForPlayer == 'scissors' and gameData.passwordScene3StateForComputer == 'paper':
-        return("PW")
+        gameData.passwordScene3GameResult = "PW"
     if gameData.passwordScene3StateForPlayer == 'rock' and gameData.passwordScene3StateForComputer == 'rock':
-        return("D")
+        gameData.passwordScene3GameResult = "D"
     if gameData.passwordScene3StateForPlayer == 'rock' and gameData.passwordScene3StateForComputer == 'paper':
-        return("CW")
+        gameData.passwordScene3GameResult = "CW"
+    
     
 
     
@@ -370,6 +394,7 @@ def drawPassword3Scene():
     image(scissors, 1030, 110, 120, 120)
     image(rock, 80, 640, 120, 120)
     image(scissors, 230, 640, 120, 120)
+    image(rules, 690, 445, 500, 350)
 
     list_computer = {'rock', 'paper'}
     
@@ -379,23 +404,52 @@ def drawPassword3Scene():
         
     if gameData.passwordScene3StateForPlayer == 'rock':
         image(rock_selected, 80, 640, 120, 120)
-    
-
-    if rockPaperScissors() == "CW":
-        gameData.scene = "GameOverScene"
-    if rockPaperScissors() == "D":
-        gameData.scene = "Password3Scene"
-    
-    
         
     
-    # print(gameData.passwordScene3StateForPlayer)
+def computerPlay():
+    random_number = floor(random(0, 2))
+    computer_choice = ['rock', 'paper']
     
-    #sdf
+    gameData.passwordScene3StateForComputer = computer_choice[random_number]
+
+def drawFinalResultScene():
+    textSize(200)
+    textAlign(CENTER, CENTER)
+    image(room3_password, 0, 0, 1200, 800)
+    image(rock, 730, 110, 120, 120)
+    image(paper, 880, 110, 120, 120)
+    image(scissors, 1030, 110, 120, 120)
+    image(rock, 80, 640, 120, 120)
+    image(scissors, 230, 640, 120, 120)
+    image(rules, 690, 445, 500, 350)
     
+    print(gameData.passwordScene3GameResult)
     
+    if gameData.passwordScene3StateForPlayer == 'scissors':
+        image(scissors_selected, 230, 640, 120, 120)
+        
+    if gameData.passwordScene3StateForPlayer == 'rock':
+        image(rock_selected, 80, 640, 120, 120)
+        
+        
+        
+    if gameData.passwordScene3StateForComputer == 'rock':
+        image(rock_selected, 730, 110, 120, 120)
+    if gameData.passwordScene3StateForComputer == 'paper':
+        image(rock_selected, 880, 110, 120, 120)
+    if gameData.passwordScene3GameResult == "D":
+        text("DRAW!", 600, 400)
+    elif gameData.passwordScene3GameResult == "CW":
+        text("YOU LOSE!", 600, 400)
+    elif gameData.passwordScene3GameResult == "PW":
+        text("YOU WIN!", 600, 400)
+        
+
+def drawLastRoom():
+    image(last_door, 0, 0, 1200, 800)
+
     
-    
+
     
     
     
