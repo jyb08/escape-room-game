@@ -1,7 +1,7 @@
 class GameData:
     
     def __init__(self):
-        self.scene = "Password3Scene"
+        self.scene = "MainScene"
         
         # EMPTY, F_STATE, I_STATE, S_STATE, FINISHED
         self.passwordSceneState = "EMPTY"
@@ -180,13 +180,17 @@ def drawPrologueScene():
     image(prologue, 0, 0, 1200, 800)
     
 def mouseClicked():
+    
+    mX = mouseX
+    mY = mouseY
+    
     if gameData.scene == "MainScene":
-        if mouseX in range (450, 750) and mouseY in range (380, 480):
+        if mX in range (450, 750) and mY in range (380, 480):
             print("Start Button Clicked")
             gameData.scene = "IntroScene"
-        if mouseX in range (450, 750) and mouseY in range (500, 600):
+        if mX in range (450, 750) and mY in range (500, 600):
             print("Load Button Clicked")
-        if mouseX in range (450, 750) and mouseY in range (650, 750):
+        if mX in range (450, 750) and mY in range (650, 750):
             print("Exit Button Clicked")
             exit()
     elif gameData.scene == "IntroScene":
@@ -208,9 +212,9 @@ def mouseClicked():
     elif gameData.scene == "Room3Scene":
         gameData.scene = "Password3Scene"
     elif gameData.scene == "Password3Scene":
-        if detectCircle(135, 690, 60, mouseX, mouseY) == True:
+        if detectCircle(135, 690, 60, mX, mY) == True:
             gameData.passwordScene3StateForPlayer = 'rock'
-        if detectCircle(285, 690, 60, mouseX, mouseY) == True:
+        elif detectCircle(285, 690, 60, mX, mY) == True:
             gameData.passwordScene3StateForPlayer = 'scissors' 
     elif gameData.scene == "GameOverScene":
          gameData.scene = "MainScene"
@@ -335,7 +339,7 @@ def drawRoom3Scene():
 
 
 def findDistance(c1, c2, a, b):
-    distance = sqrt(sq(b - c2) - sq(a - c1))
+    distance = sqrt(sq(b - c2) + sq(a - c1))
     return (distance)
     
 def detectCircle(c1, c2, r, a, b):
@@ -366,14 +370,23 @@ def drawPassword3Scene():
     image(rock, 80, 640, 120, 120)
     image(scissors, 230, 640, 120, 120)
 
+    list_computer = {'rock', 'paper'}
+    
 
     if gameData.passwordScene3StateForPlayer == 'scissors':
         image(scissors_selected, 230, 640, 120, 120)
+        
     if gameData.passwordScene3StateForPlayer == 'rock':
         image(rock_selected, 80, 640, 120, 120)
     
+
+    # if rockPaperScissors() == "CW":
+        
+        
     
-    print(gameData.passwordScene3StateForPlayer)
+        
+    
+    # print(gameData.passwordScene3StateForPlayer)
     
     
     
