@@ -179,11 +179,10 @@ def draw():
         
     if (gameData.frameCountInitial != 0) :
         transparency = 0
-        if (frameCount <= gameData.frameCountInitial + 9) :
+        if (frameCount <= gameData.frameCountInitial + 10) :
             transparency = 255
         elif (frameCount > gameData.frameCountInitial + 10) :
-            transparency = lerp(255, 0, float(frameCount - gameData.frameCountInitial)/float(10))
-        
+            transparency = lerp(255, 0, float(frameCount - gameData.frameCountInitial - 10)/float(50))
         saveButtonClicked(transparency)
         
     if gameData.frameCountFinal == frameCount:
@@ -274,7 +273,7 @@ def mouseClicked():
         exit()
     elif (detectAreaWithCoordinates(1140, 740, 1190, 739, 1191, 789, 1141, 790,  mouseX, mouseY)):
         gameData.frameCountInitial = frameCount
-        gameData.frameCountFinal = gameData.frameCountInitial + 20
+        gameData.frameCountFinal = gameData.frameCountInitial + 60
    
 
 def saveButtonClicked(transparency):
