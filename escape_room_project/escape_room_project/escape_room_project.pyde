@@ -278,15 +278,16 @@ def mouseClicked():
         
         
 def saveDataToFile():
-    saveData = [gameData.scene, 
-        gameData.passwordSceneState,
-        gameData.passwordSceneStateForGameover,
-        gameData.passwordScene2StateForGameover,
-        gameData.passwordScene2State,
-        gameData.passwordScene3StateForPlayer,
-        gameData.passwordScene3StateForComputer,
-        gameData.passwordScene3GameResult]
-    
+    saveData = [str(gameData.scene), 
+        str(gameData.passwordSceneState),
+        str(gameData.passwordSceneStateForGameover),
+        str(gameData.passwordScene2StateForGameover),
+        str(gameData.passwordScene2State),
+        str(gameData.passwordScene3StateForPlayer),
+        str(gameData.passwordScene3StateForComputer),
+        str(gameData.passwordScene3GameResult)
+        ]
+    # saveData = ["hi", "I", "am", "Jake."]
     saveStrings("saveData.txt", saveData)
     #jjj
 
