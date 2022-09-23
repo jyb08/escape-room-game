@@ -178,10 +178,11 @@ def draw():
         drawLastRoom()
         
     if (gameData.frameCountInitial != 0) :
-        if (frameCount =< gameData.frameCountInitial + 14) :
+        transparency = 0
+        if (frameCount <= gameData.frameCountInitial + 9) :
             transparency = 255
-        elif (frameCount > gameData.frameCountInitial + 15) :
-            transparency = lerp(255, 0, float(frameCount - frameCountInitial)/float(10))
+        elif (frameCount > gameData.frameCountInitial + 10) :
+            transparency = lerp(255, 0, float(frameCount - gameData.frameCountInitial)/float(10))
         
         saveButtonClicked(transparency)
         
