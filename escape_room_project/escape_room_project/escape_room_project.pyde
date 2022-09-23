@@ -8,15 +8,18 @@ class GameData:
         self.passwordSceneStateForGameover = 0
         self.passwordScene2StateForGameover = 0
         self.passwordScene2State = "DEFAULT"
-        
-        
         self.passwordScene3StateForPlayer = ""
         self.passwordScene3StateForComputer = ""
         self.passwordScene3GameResult = ""
+        
+        # save game button info
+        self.frameCountInitial = 0
+        self.frameCountFinal = 0
     
 gameData = GameData()
 
 def setup():
+    frameRate(24)
     size(1200, 800)
     
     #main:
@@ -146,6 +149,8 @@ def detectAreaWithCoordinates(x1, y1, x2, y2, x3, y3, x4, y4, a, b):
     return condition1 and condition2 and condition3 and condition4    
 
 def draw():
+
+     
             
     if gameData.scene == "MainScene":
         drawMainScene()
@@ -171,6 +176,19 @@ def draw():
         drawInfoBeforeRoom3()
     elif gameData.scene == "LastRoom":
         drawLastRoom()
+        
+    if (gameData.frameCountInitial != 0) :
+        if (frameCount =< gameData.frameCountInitial + 14) :
+            transparency = 255
+        elif (frameCount > gameData.frameCountInitial + 15) :
+            transparency = lerp(255, 0, float(frameCount - frameCountInitial)/float(10))
+        
+        saveButtonClicked(transparency)
+        
+    if gameData.frameCountFinal == frameCount:
+        gameData.frameCountInitial = 0
+        gameData.frameCountFinal = 0
+   
 
         
 def drawMainScene():
@@ -253,6 +271,20 @@ def mouseClicked():
          gameData.scene = "MainScene"
     elif gameData.scene == "LastRoom":
         exit()
+    elif (detectAreaWithCoordinates(1140, 740, 1190, 739, 1191, 789, 1141, 790,  mouseX, mouseY)):
+        gameData.frameCountInitial = frameCount
+        gameData.frameCountFinal = gameData.frameCountInitial + 20
+   
+
+def saveButtonClicked(transparency):
+    textSize(200)
+    textAlign(CENTER, CENTER)
+    fill(255, 8, 8, transparency)
+    # print("Save Button Clicked")
+    text("SAVED", 600, 400)
+    print(gameData.frameCountInitial)
+    print(gameData.frameCountFinal)
+ 
 
 def drawRoom1Scene():
     textSize(32)
