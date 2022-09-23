@@ -111,8 +111,9 @@ def setup():
     rules = loadImage("./room3_password/rules.png")
     global last_door
     last_door = loadImage("./last_room/last_door.jpg")
-    
-    
+    global rockSaltFont
+    rockSaltFont = createFont("Poor Richard", 200)
+    print(PFont.list())
     
 def calculateLineEquation(x1, y1, x2, y2):
     
@@ -179,10 +180,10 @@ def draw():
         
     if (gameData.frameCountInitial != 0) :
         transparency = 0
-        if (frameCount <= gameData.frameCountInitial + 10) :
+        if (frameCount <= gameData.frameCountInitial + 5) :
             transparency = 255
-        elif (frameCount > gameData.frameCountInitial + 10) :
-            transparency = lerp(255, 0, float(frameCount - gameData.frameCountInitial - 10)/float(50))
+        elif (frameCount > gameData.frameCountInitial + 5) :
+            transparency = lerp(255, 0, float(frameCount - gameData.frameCountInitial - 5)/float(15))
         saveButtonClicked(transparency)
         
     if gameData.frameCountFinal == frameCount:
@@ -273,12 +274,13 @@ def mouseClicked():
         exit()
     elif (detectAreaWithCoordinates(1140, 740, 1190, 739, 1191, 789, 1141, 790,  mouseX, mouseY)):
         gameData.frameCountInitial = frameCount
-        gameData.frameCountFinal = gameData.frameCountInitial + 60
+        gameData.frameCountFinal = gameData.frameCountInitial + 20
    
 
 def saveButtonClicked(transparency):
     textSize(200)
     textAlign(CENTER, CENTER)
+    textFont(rockSaltFont)
     fill(255, 8, 8, transparency)
     # print("Save Button Clicked")
     text("SAVED", 600, 400)
