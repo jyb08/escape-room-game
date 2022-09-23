@@ -113,7 +113,6 @@ def setup():
     last_door = loadImage("./last_room/last_door.jpg")
     global rockSaltFont
     rockSaltFont = createFont("Poor Richard", 200)
-    print(PFont.list())
     
 def calculateLineEquation(x1, y1, x2, y2):
     
@@ -275,7 +274,22 @@ def mouseClicked():
     elif (detectAreaWithCoordinates(1140, 740, 1190, 739, 1191, 789, 1141, 790,  mouseX, mouseY)):
         gameData.frameCountInitial = frameCount
         gameData.frameCountFinal = gameData.frameCountInitial + 20
-   
+        saveDataToFile()
+        
+        
+def saveDataToFile():
+    saveData = [gameData.scene, 
+        gameData.passwordSceneState,
+        gameData.passwordSceneStateForGameover,
+        gameData.passwordScene2StateForGameover,
+        gameData.passwordScene2State,
+        gameData.passwordScene3StateForPlayer,
+        gameData.passwordScene3StateForComputer,
+        gameData.passwordScene3GameResult]
+    
+    saveStrings("saveData.txt", saveData)
+    #jjj
+
 
 def saveButtonClicked(transparency):
     textSize(200)
