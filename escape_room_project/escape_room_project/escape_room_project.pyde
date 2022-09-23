@@ -1,7 +1,7 @@
 class GameData:
     
     def __init__(self):
-        self.scene = "Password3Scene"
+        self.scene = "MainScene"
         
         # EMPTY, F_STATE, I_STATE, S_STATE, FINISHED
         self.passwordSceneState = "EMPTY"
@@ -20,6 +20,8 @@ def setup():
     size(1200, 800)
     
     #main:
+    global saveB
+    saveB = loadImage("./main/saveB.png")
     global main_img
     main_img = loadImage("./main/main_img.png")
     global font
@@ -107,7 +109,7 @@ def setup():
     global last_door
     last_door = loadImage("./last_room/last_door.jpg")
     
-
+    
     
 def calculateLineEquation(x1, y1, x2, y2):
     
@@ -172,7 +174,7 @@ def draw():
 
         
 def drawMainScene():
-
+    
     image(main_img, 0, 0, 1200, 800)
     textFont(font, 50)
     text("", 10, 50)
@@ -183,13 +185,16 @@ def drawMainScene():
     image(jessica, 1080, 150, 180, 660)
 
     # print(gameData.scene)
-    
+
 def drawIntroScene():
     image(pasta_resto, 0, 0, 1200, 800)
 
 
+
+
 def drawPrologueScene():
     image(prologue, 0, 0, 1200, 800)
+
     
 def mouseClicked():
     
@@ -237,10 +242,13 @@ def mouseClicked():
     elif gameData.scene == "FinalResultScene":
         if gameData.passwordScene3GameResult == "CW":
             gameData.scene = "GameOverScene"
+            emptyString()
         elif gameData.passwordScene3GameResult == "PW":
             gameData.scene = "LastRoom"
+            emptyString()
         elif gameData.passwordScene3GameResult == "D":
             gameData.scene = "Password3Scene"
+            emptyString()
     elif gameData.scene == "GameOverScene":
          gameData.scene = "MainScene"
     elif gameData.scene == "LastRoom":
@@ -259,6 +267,7 @@ def drawRoom1Scene():
         cursor(ARROW)
     if (detectAreaWithCoordinates(106, 63, 330, 107, 298, 254, 78, 203, mouseX, mouseY)):
         image(letter, 0, 0, 1200, 800)
+    image(saveB, 1140, 740, 50, 50)
 
 def keyPressed():
     
@@ -336,7 +345,7 @@ def drawRoom2Scene():
         image(letter2, 0, 0, 1200, 800)
     # elif (detectAreaWithCoordinates(950, 372, 971, 373, 972, 409, 951, 414, mouseX, mouseY)):
     #     image(default, width/2 - 400, height/2 - 300, 800, 600)    
-    
+    image(saveB, 1140, 740, 50, 50)
 
 def drawPassword2Scene():
     image(default_4_pw, 100, 95, 1000, 605)
@@ -404,8 +413,8 @@ def drawPassword3Scene():
         
     if gameData.passwordScene3StateForPlayer == 'rock':
         image(rock_selected, 80, 640, 120, 120)
-        
-    
+    image(saveB, 1140, 740, 50, 50)
+
 def computerPlay():
     random_number = floor(random(0, 2))
     computer_choice = ['rock', 'paper']
@@ -415,6 +424,7 @@ def computerPlay():
 def drawFinalResultScene():
     textSize(200)
     textAlign(CENTER, CENTER)
+    fill(255, 8, 8, 255)
     image(room3_password, 0, 0, 1200, 800)
     image(rock, 730, 110, 120, 120)
     image(paper, 880, 110, 120, 120)
@@ -439,11 +449,24 @@ def drawFinalResultScene():
         image(rock_selected, 880, 110, 120, 120)
     if gameData.passwordScene3GameResult == "D":
         text("DRAW!", 600, 400)
+        textSize(40)
+        text("Click to Proceed", 600, 550)
     elif gameData.passwordScene3GameResult == "CW":
         text("YOU LOSE!", 600, 400)
+        textSize(40)
+        text("Click to Proceed", 600, 550)
     elif gameData.passwordScene3GameResult == "PW":
         text("YOU WIN!", 600, 400)
+        textSize(40)
+        text("Click to Proceed", 600, 550)
         
+
+def emptyString():
+     gameData.passwordScene3GameResult = ""
+     gameData.passwordScene3StateForComputer = ""
+     gameData.passwordScene3StateForPlayer = ""
+     
+
 
 def drawLastRoom():
     image(last_door, 0, 0, 1200, 800)
