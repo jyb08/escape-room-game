@@ -1,3 +1,5 @@
+import base64
+
 class GameData:
     
     def __init__(self):
@@ -225,6 +227,7 @@ def mouseClicked():
             gameData.scene = "IntroScene"
         if mX in range (450, 750) and mY in range (500, 600):
             print("Load Button Clicked")
+            loadDataFromFile()
         if mX in range (450, 750) and mY in range (650, 750):
             print("Exit Button Clicked")
             exit()
@@ -271,33 +274,41 @@ def mouseClicked():
          gameData.scene = "MainScene"
     elif gameData.scene == "LastRoom":
         exit()
-    elif (detectAreaWithCoordinates(1140, 740, 1190, 739, 1191, 789, 1141, 790,  mouseX, mouseY)):
+    if (detectAreaWithCoordinates(1140, 740, 1190, 739, 1191, 789, 1141, 790,  mouseX, mouseY)):
+        print("CLICKED")
         gameData.frameCountInitial = frameCount
         gameData.frameCountFinal = gameData.frameCountInitial + 20
         saveDataToFile()
         
         
 def saveDataToFile():
-    saveData = [str(gameData.scene), 
-        str(gameData.passwordSceneState),
-        str(gameData.passwordSceneStateForGameover),
-        str(gameData.passwordScene2StateForGameover),
-        str(gameData.passwordScene2State),
-        str(gameData.passwordScene3StateForPlayer),
-        str(gameData.passwordScene3StateForComputer),
-        str(gameData.passwordScene3GameResult)
+    saveData = [base64.encodestring(str(gameData.scene).encode('utf-8')).rstrip('\n'), 
+        base64.encodestring(str(gameData.passwordSceneState.encode('utf-8'))).rstrip('\n'),
+        base64.encodestring(str(gameData.passwordSceneStateForGameover).encode('utf-8')).rstrip('\n'),
+        base64.encodestring(str(gameData.passwordScene2StateForGameover).encode('utf-8')).rstrip('\n'),
+        base64.encodestring(str(gameData.passwordScene2State).encode('utf-8')).rstrip('\n'),
+        base64.encodestring(str(gameData.passwordScene3StateForPlayer).encode('utf-8').rstrip('\n')),
+        base64.encodestring(str(gameData.passwordScene3StateForComputer).encode('utf-8')).rstrip('\n'),
+        base64.encodestring(str(gameData.passwordScene3GameResult).encode('utf-8')).rstrip('\n')
         ]
-    # saveData = ["hi", "I", "am", "Jake."]
     saveStrings("saveData.txt", saveData)
-    #jjj
 
-
+def loadDataFromFile():
+    savedData = loadStrings("saveData.txt")
+    gameData.scene = base64.decodestring(savedData[0])
+    gameData.passwordSceneState = base64.decodestring(savedData[1])
+    gameData.passwordSceneStateForGameover = int(base64.decodestring(savedData[2]))
+    gameData.passwordScene2StateForGameover = int(base64.decodestring(savedData[3]))
+    gameData.passwordScene2State = base64.decodestring(savedData[4])
+    gameData.passwordScene3StateForPlayer = base64.decodestring(savedData[5])
+    gameData.passwordScene3StateForComputer = base64.decodestring(savedData[6])
+    gameData.passwordScene3GameResult = base64.decodestring(savedData[7])
+    
 def saveButtonClicked(transparency):
     textSize(200)
     textAlign(CENTER, CENTER)
     textFont(rockSaltFont)
     fill(255, 8, 8, transparency)
-    # print("Save Button Clicked")
     text("SAVED", 600, 400)
     print(gameData.frameCountInitial)
     print(gameData.frameCountFinal)
